@@ -1,0 +1,172 @@
+```
+
+                     .                          
+                     M                          
+                    dM                          
+                    MMr                         
+                   4MMML                  .     
+                   MMMMM.                xf     
+   .              "MMMMM               .MM-     
+    Mh..          +MMMMMM            .MMMM      
+    .MMM.         .MMMMML.          MMMMMh      
+    )MMMh.        MMMMMM         MMMMMMM       
+      3MMMMx.     'MMMMMMf      xnMMMMMM"       
+      '*MMMMM      MMMMMM.     nMMMMMMP"        
+        *MMMMMx    "MMMMM\    .MMMMMMM=         
+         *MMMMMh   "MMMMM"   JMMMMMMP           
+           MMMMMM   3MMMM.  dMMMMMM            .
+            MMMMMM  "MMMM  .MMMMM(        .nnMP"
+=..          *MMMMx  MMM"  dMMMM"    .nnMMMMM*  
+  "MMn...     'MMMMr 'MM   MMM"   .nMMMMMMM*"   
+   "4MMMMnn..   *MMM  MM  MMP"  .dMMMMMMM""     
+     ^MMMMMMMMx.  *ML "M .M*  .MMMMMM**"        
+        *PMMMMMMhn. *x > M  .MMMM**""           
+           ""**MMMMhx/.h/ .=*"                  
+                    .3P"%....                   
+                  nP"     "*MMnx   
+
+```
+
+###############################################################################################################
+
+# **README PLANT PROJECT:**
+
+
+This README is for all the program files in the modules and main.py. I have divided the sections according to each module. I have also included a formatted .docx version that is more legible. 
+
+
+
+#################################################
+
+##**README for Main Module** 
+
+
+
+#################################################
+
+**Installation:**
+1.	Ensure that the required packages are installed, including sys, os, glob, rawpy, cv2, numpy, shutil,,matplotlib,  
+skimage, showImages, sklearn, pathlib and PIL.
+2.	Download the script and save it to your project directory.
+This set of Python modules is designed to preprocess, segment, and analyze plant images. Native support for sony ARW images as well as PNG. The Rawpy library can allow for any other type of  .raw camera file as well. The image is passed through a series of processes that enable the analysis via average clusters known as k-means. At default 8 clusters are selected, which can be customized. Then the colors are compared to green,yellow,pink and brown, of which there are high and low settings, so 8 colors in total, which can again, be changed in the corresponding module. 
+
+The design process went from a jupyter notebook to a full fledged modular program. My goal with this was to separate each process as much as possible from the others, to allow for maximal compatibility with ones own use case. 
+
+
+
+**Usage:**
+
+  1.	Import the necessary functions from the modules package:
+
+javascript
+from preProcess import main as preprocess_main
+from colorProcess import main as colorprocess_main
+from analyze import main as analyze_main
+
+  3.	Select a folder that has raw or png files to analyze. This will be prompted. Furthermore, you can use the verbose mode to further understand what is going on.
+
+  4.	Before use, these modules will need to be changed in the python files to whatever directory you have saved:
+python
+sys.path.append(r"C:\Users\rober\CC_09-1\modules")
+python
+os.listdir(r"C:\Users\rober\CC_09-1\modules")
+
+  5.	Call the main() function in the script to execute the following steps:
+    1.	Preprocess the images
+    2.	Run Canny test
+    3.	Run K-means
+    4.	Color process the images
+    5.	Analyze the images
+    6.	Show the images
+
+**Troubleshooting:**
+1.	Adjust the paths for the system and module directories if needed.
+2.	Adjust the file paths for the input and output images as necessary.
+3.	Ensure that the required packages are installed.
+4.	Check that the input folder contains preprocessed images.
+5.	Check that the output folder is specified correctly.
+6.	Verify that the generated images have been generated correctly.
+##README for Image Processing Script
+This Python script performs image preprocessing and feature extraction on images of plants.
+Functions:
+1.	convert_arw_to_png(arw_folder, png_folder): Converts ARW files to PNG format.
+2.	preprocess_images(png_folder, preprocessed_folder): Resizes and applies a Gaussian blur to the PNG images.
+3.	extract_features(preprocessed_folder, save_folder): Extracts features from the preprocessed images, including histogram of oriented gradients (HOG) features, color histograms, and HSV images.
+4.	show_generated_images(folder_path): Displays the generated images.
+5.	main(): Executes the entire image processing and feature extraction process.
+Usage:
+1.	Call the pre_process_main() function.
+2.	Provide inputs when prompted for verbose mode and input folder.
+README for Canny Edge Detector Script
+This Python script performs a canny edge detector test on preprocessed images of plants.
+Functions:
+1.	canny_test(preprocessed_folder): Performs the canny edge detector test on preprocessed images, saving the generated images to a specified output folder.
+2.	show_generated_images(folder_path): Displays the generated images.
+Usage:
+1.	Call the canny_test() function and provide the path to the preprocessed images as input.
+2.	Adjust the threshold settings based on the generated images and use the best threshold settings in the main program.
+
+#################################################
+
+##**README for KMeans Clustering Module**
+
+#################################################
+
+This Python module performs KMeans clustering on input images, segments the image using the cluster centers, and applies a binary mask to the original image.
+Usage
+To use the module, import it into your Python script and call the kmeans() function with the path to the input folder containing the images. Optionally, you can specify the number of clusters to use in the KMeans algorithm and set the verbose flag to True to print progress updates.
+from kmeans import kmeans
+
+input_folder = "path/to/input/folder"
+num_clusters = 8
+verbose = True
+
+kmeans(input_folder, num_clusters, verbose)
+The kmeans() function performs the following steps:
+1.	Creates an output folder for the segmented and masked images.
+2.	Loops over each image in the input folder that ends with '_hsv.png'.
+3.	Loads the preprocessed image and flattens it into a 2D array of pixels.
+4.	Runs KMeans clustering on the flattened image with the specified number of clusters.
+5.	Reshapes the cluster centers back into the original image shape.
+6.	Segments the image using the cluster centers.
+7.	Saves the segmented image to the output folder.
+8.	Applies a binary mask to the original image using the edges of the segmented image.
+9.	Saves the masked image to the output folder.
+
+
+#################################################
+
+##**README for Show Generated Images**
+
+#################################################
+
+This set of Python modules is designed to display generated and indexed images.
+Functions:
+
+1.	show_generated_images(folder_path): Displays all the PNG files in the folder as a grid of images. Used multiple times, extremely useful for understanding what is happening. 
+2.	show_indexed_images(folder_path, indices): Displays a subset of the PNG files in the folder as a grid of images. This is important for the healthy/unhealthy plants, as they come in indexes and the indexes are what we use designate which is which. 
+
+
+
+#################################################
+
+##**README for Analyze modules**
+
+
+#################################################
+
+This set of Python modules is designed to preprocess, segment, and analyze plant images.
+The main() function in the script will execute the following steps:
+The analyze_plant_health() function in the script takes an input folder of images and performs the following steps:
+
+1.	Read in each image in the input folder.
+2.	Reshape the image to be a list of pixels.
+3.	Apply K-means clustering to the pixels.
+4.	Count the number of pixels in each cluster.
+5.	Calculate the percentage of pixels in each cluster.
+6.	Determine the color category of each cluster.
+7.	Calculate the percentage of pixels in each color category.
+The is_plant_healthy() function checks the health of the plant based on the percentage of pixels in each color category and a set of predetermined threshold values.
+Finally, the main() function prompts the user to enter the input folder path, analyzes the plant health for each image in the folder, and prints the results to the console.
+
+##############################################################################################################
